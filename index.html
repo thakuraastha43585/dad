@@ -439,6 +439,120 @@
     font-size:.95rem;
     opacity:.6;
   }
+  .coupon-row{
+    margin-top:1.4rem;
+    display:flex;
+    gap:.5rem;
+  }
+  .coupon-row input{
+    flex:1;
+    min-width:0;
+    border:2.5px solid var(--navy);
+    border-radius:999px;
+    padding:.6rem 1rem;
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    font-size:.9rem;
+    color:var(--navy);
+    background:var(--cream);
+    text-transform:uppercase;
+  }
+  .coupon-row input:focus{ outline:3px solid var(--gold); background:var(--white); }
+  .coupon-btn{
+    font-family:'Baloo 2', cursive;
+    font-weight:700;
+    font-size:.9rem;
+    color:var(--navy);
+    background:var(--gold);
+    border:2.5px solid var(--navy);
+    border-radius:999px;
+    padding:.6rem 1.2rem;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .12s ease;
+  }
+  .coupon-btn:active{ transform:translateY(2px); }
+  .coupon-feedback{
+    margin-top:.6rem;
+    font-size:.85rem;
+    font-weight:700;
+    min-height:1.1rem;
+  }
+  .coupon-feedback.success{ color:var(--mint); }
+  .coupon-feedback.error{ color:var(--coral); }
+
+  .share-card{
+    display:none;
+    max-width:480px;
+    margin:1.8rem auto 0;
+    background:var(--white);
+    border:3px solid var(--mint);
+    border-radius:22px;
+    box-shadow:7px 7px 0 var(--mint);
+    padding:1.6rem 1.6rem 1.8rem;
+    text-align:center;
+  }
+  .share-card.show{ display:block; animation:popin .45s cubic-bezier(.34,1.56,.64,1); }
+  .share-label{
+    font-family:'Baloo 2', cursive;
+    font-size:1.2rem;
+    color:var(--navy);
+  }
+  .share-link-row{
+    margin-top:1rem;
+    display:flex;
+    gap:.5rem;
+  }
+  .share-link-row input{
+    flex:1;
+    min-width:0;
+    border:2.5px solid var(--navy);
+    border-radius:999px;
+    padding:.6rem 1rem;
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;
+    font-size:.85rem;
+    color:var(--navy);
+    background:var(--cream);
+  }
+  .copy-btn{
+    font-family:'Baloo 2', cursive;
+    font-weight:700;
+    font-size:.9rem;
+    color:#fff;
+    background:var(--coral);
+    border:none;
+    border-radius:999px;
+    padding:.6rem 1.2rem;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .12s ease;
+  }
+  .copy-btn:active{ transform:translateY(2px); }
+  .share-hint{ margin-top:.8rem; font-size:.85rem; font-weight:600; opacity:.65; }
+
+  /* ---------- DAD VIEW BANNER ---------- */
+  .dad-message-banner{
+    margin:1.2rem auto 0;
+    max-width:520px;
+    background:var(--white);
+    border:3px solid var(--navy);
+    border-radius:20px;
+    box-shadow:6px 6px 0 var(--navy);
+    padding:1.1rem 1.4rem;
+  }
+  .dad-message-from{
+    font-weight:700;
+    font-size:.9rem;
+    color:var(--coral);
+  }
+  .dad-message-text{
+    font-family:'Baloo 2', cursive;
+    font-size:1.25rem;
+    color:var(--navy);
+    margin-top:.5rem;
+    line-height:1.3;
+  }
   .pay-btn{
     margin-top:1.6rem;
     width:100%;
@@ -633,11 +747,27 @@
       <div class="pay-card">
 
         <div class="price-display">
-          <span class="price-amount">₹99</span>
+          <span class="price-amount" id="priceAmount">₹99</span>
           <span class="price-label">Flat gift price</span>
         </div>
+
+        <div class="coupon-row">
+          <input type="text" id="couponInput" placeholder="Have a discount code?">
+          <button class="coupon-btn" id="couponApplyButton">Apply</button>
+        </div>
+        <p class="coupon-feedback" id="couponFeedback"></p>
+
         <button class="pay-btn" id="payButton">Pay ₹99 with Razorpay 💙</button>
         <p class="pay-note">Demo checkout — site owner: add your Razorpay Key ID in the script to go live.</p>
+      </div>
+
+      <div class="share-card" id="shareCard">
+        <p class="share-label">🎁 Your gift link is ready!</p>
+        <div class="share-link-row">
+          <input type="text" id="shareLinkInput" readonly>
+          <button class="copy-btn" id="copyLinkButton">Copy Link</button>
+        </div>
+        <p class="share-hint">Send this to Dad so he can open his surprise 💙</p>
       </div>
     </div>
   </section>
@@ -824,13 +954,71 @@
   });
 
   // ---------- PAYMENT ----------
-  const RAZORPAY_KEY_ID = "rzp_live_Sz9gct8RO5E1jB"; // <-- replace with your real Razorpay Key ID to go live
+  const RAZORPAY_KEY_ID = "rzp_test_YOUR_KEY_ID_HERE"; // <-- replace with your real Razorpay Key ID to go live
   const FIXED_AMOUNT = 99; // flat gift price in INR
+  let currentAmount = FIXED_AMOUNT;
+
+  const discountCodes = {
+    SUPERDAD15:   { type: 'percent',  value: 15 },
+    HERO20:       { type: 'percent',  value: 20, minOrder: 999 },
+    CAPEFREE:     { type: 'shipping' },
+    WORLDSBEST10: { type: 'percent',  value: 10 },
+    DAD99:        { type: 'flat',     value: 99, minOrder: 599 },
+    FIRSTHERO:    { type: 'percent',  value: 5 }
+  };
+
+  function updatePriceUI(){
+    document.getElementById('priceAmount').textContent = '₹' + currentAmount;
+    document.getElementById('payButton').textContent = 'Pay ₹' + currentAmount + ' with Razorpay 💙';
+  }
+
+  document.getElementById('couponApplyButton').addEventListener('click', () => {
+    const raw = document.getElementById('couponInput').value.trim().toUpperCase();
+    const feedback = document.getElementById('couponFeedback');
+    currentAmount = FIXED_AMOUNT;
+
+    if (!raw){
+      feedback.textContent = 'Enter a code first 💛';
+      feedback.className = 'coupon-feedback error';
+      updatePriceUI();
+      return;
+    }
+    const deal = discountCodes[raw];
+    if (!deal){
+      feedback.textContent = "That code doesn't look right.";
+      feedback.className = 'coupon-feedback error';
+      updatePriceUI();
+      return;
+    }
+    if (deal.minOrder && FIXED_AMOUNT < deal.minOrder){
+      feedback.textContent = `${raw} needs a minimum order of ₹${deal.minOrder}.`;
+      feedback.className = 'coupon-feedback error';
+      updatePriceUI();
+      return;
+    }
+    if (deal.type === 'percent'){
+      currentAmount = Math.max(1, Math.round(FIXED_AMOUNT * (1 - deal.value / 100)));
+      feedback.textContent = `${raw} applied — ${deal.value}% off! 🎉`;
+    } else if (deal.type === 'flat'){
+      currentAmount = Math.max(1, FIXED_AMOUNT - deal.value);
+      feedback.textContent = `${raw} applied — ₹${deal.value} off! 🎉`;
+    } else if (deal.type === 'shipping'){
+      feedback.textContent = `${raw} applied — free shipping! 🎉`;
+    }
+    feedback.className = 'coupon-feedback success';
+    updatePriceUI();
+  });
+
+  function onPaymentSuccess(){
+    toast('Payment successful! 🎉');
+    showShareLink();
+  }
 
   document.getElementById('payButton').addEventListener('click', () => {
-    const amount = FIXED_AMOUNT;
+    const amount = currentAmount;
     if (RAZORPAY_KEY_ID.includes('YOUR_KEY_ID')){
-      toast('Demo mode — add your Razorpay Key ID in the code to enable real payments.', 3200);
+      toast('Demo payment successful! 🎉', 2600);
+      onPaymentSuccess();
       return;
     }
     if (typeof Razorpay === 'undefined'){
@@ -845,11 +1033,45 @@
       description: 'A little something for Dad',
       theme: { color: '#1C2E4A' },
       handler: function(response){
-        toast('Payment successful! 🎉');
+        onPaymentSuccess();
       }
     };
     const rzp = new Razorpay(options);
     rzp.open();
+  });
+
+  // ---------- SHAREABLE LINK ----------
+  function buildShareLink(){
+    const name = (document.getElementById('yourName').value || '').trim();
+    const nickname = (document.getElementById('dadNickname').value || '').trim();
+    const message = (document.getElementById('customMessage').value || '').trim();
+    const params = new URLSearchParams();
+    if (name) params.set('from', name);
+    if (nickname) params.set('to', nickname);
+    if (message) params.set('msg', message);
+    const base = window.location.origin + window.location.pathname;
+    const query = params.toString();
+    return query ? base + '?' + query : base;
+  }
+
+  function showShareLink(){
+    const link = buildShareLink();
+    const input = document.getElementById('shareLinkInput');
+    input.value = link;
+    const card = document.getElementById('shareCard');
+    card.classList.add('show');
+    setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+  }
+
+  document.getElementById('copyLinkButton').addEventListener('click', async () => {
+    const input = document.getElementById('shareLinkInput');
+    try {
+      await navigator.clipboard.writeText(input.value);
+    } catch(e){
+      input.select();
+      try { document.execCommand('copy'); } catch(e2){}
+    }
+    toast('Link copied! Send it to Dad 💙');
   });
 
   // ---------- PERSONALIZE FORM ----------
@@ -884,6 +1106,42 @@
     });
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
+
+  // ---------- DAD'S VIEW (opened via shared link) ----------
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function initDadView(){
+    const params = new URLSearchParams(window.location.search);
+    const to = params.get('to');
+    const from = params.get('from');
+    const msg = params.get('msg');
+    if (!to && !from && !msg) return;
+
+    const navPersonalize = document.querySelector('.nav-pill[data-page="1"]');
+    const navPayment = document.querySelector('.nav-pill[data-page="4"]');
+    if (navPersonalize) navPersonalize.style.display = 'none';
+    if (navPayment) navPayment.style.display = 'none';
+
+    const heroWrap = document.querySelector('.hero .wrap');
+    const hint = heroWrap.querySelector('.hint');
+    const banner = document.createElement('div');
+    banner.className = 'dad-message-banner';
+    banner.innerHTML =
+      '<p class="dad-message-from">💌 A surprise from ' + escapeHtml(from || 'someone who loves you') + '</p>' +
+      '<p class="dad-message-text">"' + escapeHtml(msg || "Happy Father's Day! You're my favorite superhero. 💙") + '"</p>';
+    heroWrap.insertBefore(banner, hint);
+
+    if (to){
+      document.querySelector('.hero h1').textContent = "Happy Father's Day, " + to + '!';
+    }
+
+    goToPage(2);
+  }
+  initDadView();
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
