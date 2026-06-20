@@ -571,6 +571,136 @@
   .pay-btn:active{ transform:translateY(4px); box-shadow:0 2px 0 #c9534a; }
   .pay-note{margin-top:1rem; font-size:.8rem; opacity:.6; font-style:italic;}
 
+  /* ---------- CAKE ---------- */
+  .cake-section{background:var(--white);}
+  .cake-stage{
+    position:relative;
+    width:240px;
+    height:250px;
+    margin:2.6rem auto 0;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  .cake-flame{
+    position:absolute;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:1.7rem;
+    animation:flicker 1.3s ease-in-out infinite;
+    transition:opacity .45s ease, transform .55s ease;
+    z-index:3;
+  }
+  @keyframes flicker{
+    0%,100%{ transform:translateX(-50%) scale(1) rotate(-3deg); }
+    50%{ transform:translateX(-50%) scale(1.12) rotate(4deg); }
+  }
+  .cake-flame.out{
+    opacity:0;
+    transform:translateX(-50%) translateY(-18px) scale(.4);
+  }
+  .smoke{
+    position:absolute;
+    top:14px; left:50%;
+    width:10px; height:10px;
+    border-radius:50%;
+    background:rgba(140,140,140,.5);
+    pointer-events:none;
+    z-index:2;
+    animation:smokeRise 1.5s ease-out forwards;
+  }
+  @keyframes smokeRise{
+    0%{ opacity:.65; transform:translate(-50%,0) scale(1); }
+    100%{ opacity:0; transform:translate(-50%,-65px) scale(2.4); }
+  }
+  .candle{
+    position:absolute;
+    top:26px; left:50%;
+    transform:translateX(-50%);
+    width:10px; height:40px;
+    background:repeating-linear-gradient(45deg, var(--pink), var(--pink) 6px, #fff 6px, #fff 12px);
+    border:2px solid var(--navy);
+    border-radius:3px;
+    z-index:1;
+  }
+  .cake-body{
+    position:absolute;
+    bottom:20px; left:50%;
+    transform:translateX(-50%);
+    width:200px;
+    transition:transform 1.5s cubic-bezier(.6,-0.15,.7,1);
+  }
+  .cake-tier-top{
+    position:relative;
+    width:170px; height:58px;
+    margin:0 auto;
+    background:var(--pink);
+    border:3px solid var(--navy);
+    border-radius:18px 18px 10px 10px;
+    box-shadow:4px 4px 0 var(--navy);
+    transition:border-radius 1.5s ease;
+  }
+  .cake-frosting{
+    position:absolute;
+    top:-15px; left:0; right:0;
+    height:24px;
+    background:#fff;
+    border:3px solid var(--navy);
+    border-radius:50% 50% 20% 20% / 70% 70% 30% 30%;
+    transition:border-radius 1.5s ease, top 1.5s ease;
+  }
+  .cake-tier-bottom{
+    width:200px; height:72px;
+    margin:-3px auto 0;
+    background:var(--gold);
+    border:3px solid var(--navy);
+    border-radius:10px 10px 18px 18px;
+    box-shadow:5px 5px 0 var(--navy);
+    transition:border-radius 1.5s ease;
+  }
+  .cake-plate{
+    width:220px; height:16px;
+    margin:-2px auto 0;
+    background:var(--navy);
+    border-radius:50%;
+  }
+  .cake-body.melting{
+    transform:translateX(-50%) scaleY(.42) scaleX(1.16);
+  }
+  .cake-body.melting .cake-tier-top{ border-radius:8px 8px 70% 70% / 8px 8px 100% 100%; }
+  .cake-body.melting .cake-tier-bottom{ border-radius:8px 8px 85% 85% / 8px 8px 140% 140%; }
+  .cake-body.melting .cake-frosting{ border-radius:40% 40% 60% 60% / 25% 25% 100% 100%; top:-10px; }
+  .cake-hint{
+    margin-top:1.5rem;
+    font-weight:700;
+    color:var(--coral);
+    font-size:.95rem;
+  }
+  .final-message{
+    display:none;
+    margin:1.8rem auto 0;
+    max-width:480px;
+    background:var(--cream);
+    border:3px solid var(--navy);
+    border-radius:20px;
+    box-shadow:6px 6px 0 var(--navy);
+    padding:1.6rem 1.6rem;
+    text-align:center;
+  }
+  .final-message.show{ display:block; animation:popin .5s cubic-bezier(.34,1.56,.64,1); }
+  .final-message h2{
+    font-family:'Baloo 2', cursive;
+    font-size:clamp(1.7rem,5vw,2.3rem);
+    color:var(--coral);
+  }
+  .final-message p{
+    margin-top:.8rem;
+    font-weight:600;
+    font-size:1.02rem;
+    color:var(--navy);
+    line-height:1.4;
+  }
+
   /* ---------- FOOTER ---------- */
   footer{
     text-align:center;
@@ -622,7 +752,8 @@
       <button class="nav-pill active" data-page="1" onclick="goToPage(1)">📝 Personalize</button>
       <button class="nav-pill" data-page="2" onclick="goToPage(2)">🎈 Hello</button>
       <button class="nav-pill" data-page="3" onclick="goToPage(3)">🌸 Wishes</button>
-      <button class="nav-pill" data-page="4" onclick="goToPage(4)">💙 Send a Gift</button>
+      <button class="nav-pill" data-page="4" onclick="goToPage(4)">🎂 Cake</button>
+      <button class="nav-pill" data-page="5" onclick="goToPage(5)">💙 Send a Gift</button>
     </div>
   </nav>
 
@@ -722,14 +853,14 @@
 
   <div class="page-footer-nav">
     <button class="next-btn back-btn" onclick="goToPage(2)">← Back</button>
-    <button class="next-btn" id="page3NextBtn" onclick="goToPage(4)">Next: Send a Gift →</button>
+    <button class="next-btn" id="page3NextBtn" onclick="goToPage(4)">Next: One More Surprise 🎂 →</button>
   </div>
 
   </div>
   <!-- END PAGE 3 -->
 
   <!-- PAGE 4 -->
-  <div class="page" id="page4">
+  <div class="page" id="page5">
 
   <!-- PAYMENT -->
   <section class="payment-section">
@@ -772,12 +903,55 @@
     </div>
   </section>
 
+  <div class="page-footer-nav">
+    <button class="next-btn back-btn" onclick="goToPage(4)">← Back</button>
+  </div>
+
+  </div>
+  <!-- END PAGE 5 (payment) -->
+
+  <!-- PAGE 4 (cake) -->
+  <div class="page" id="page4">
+
+  <!-- BIRTHDAY-STYLE CAKE -->
+  <section class="cake-section">
+    <div class="wrap center">
+      <span class="eyebrow">🎂 One more surprise</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Make a Wish, <span id="cakeNickname">Dad</span>!</h2>
+      <p class="sub">Tap the cake to blow out the candle.</p>
+
+      <div class="cake-stage" id="cakeStage">
+        <div class="cake-flame" id="cakeFlame">🔥</div>
+        <div class="candle" id="cakeCandle"></div>
+        <div class="cake-body" id="cakeBody">
+          <div class="cake-tier-top">
+            <div class="cake-frosting"></div>
+          </div>
+          <div class="cake-tier-bottom"></div>
+          <div class="cake-plate"></div>
+        </div>
+      </div>
+
+      <p class="cake-hint" id="cakeHint">👆 Tap the candle to blow it out</p>
+
+      <div class="final-message" id="finalMessage">
+        <h2>🎉 Happy Father's Day! 🎉</h2>
+        <p>Thank you for every hug, every lesson, and every cape you've quietly worn. We hope this little wish made you smile.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-footer-nav">
+    <button class="next-btn back-btn" onclick="goToPage(3)">← Back</button>
+    <button class="next-btn" id="page4NextBtn" onclick="goToPage(5)">Next: Send a Gift →</button>
+  </div>
+
+  </div>
+  <!-- END PAGE 4 (cake) -->
+
   <footer>
     Made with 💙 for every superhero dad out there.
   </footer>
-
-  </div>
-  <!-- END PAGE 4 -->
 
   <div id="toast"></div>
 
@@ -928,6 +1102,47 @@
     flowerField.appendChild(el);
   }
   for (let i=0; i<5; i++) spawnFlower();
+
+  // ---------- CAKE ----------
+  const cakeStage = document.getElementById('cakeStage');
+  const cakeFlame = document.getElementById('cakeFlame');
+  const cakeBody = document.getElementById('cakeBody');
+  const cakeHint = document.getElementById('cakeHint');
+  const finalMessage = document.getElementById('finalMessage');
+  let cakeBlown = false;
+
+  if (cakeStage){
+    cakeStage.addEventListener('click', () => {
+      if (cakeBlown) return;
+      cakeBlown = true;
+
+      cakeFlame.classList.add('out');
+
+      for (let i=0; i<6; i++){
+        const puff = document.createElement('div');
+        puff.className = 'smoke';
+        puff.style.left = (50 + rand(-8,8)) + '%';
+        puff.style.animationDelay = rand(0, .35).toFixed(2) + 's';
+        cakeStage.appendChild(puff);
+        setTimeout(() => puff.remove(), 1700);
+      }
+
+      const stageRect = cakeStage.getBoundingClientRect();
+      confettiBurst(stageRect.left + stageRect.width/2, stageRect.top + 20);
+      cakeHint.textContent = '🕯️ Wish made! Watch the cake melt with joy…';
+
+      setTimeout(() => {
+        cakeBody.classList.add('melting');
+      }, 400);
+
+      setTimeout(() => {
+        finalMessage.classList.add('show');
+        const rect = cakeStage.getBoundingClientRect();
+        confettiBurst(rect.left + rect.width/2, rect.top + rect.height/2);
+        finalMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 1900);
+    });
+  }
 
   // ---------- DISCOUNT CODES ----------
   document.querySelectorAll('.code-badge').forEach(badge => {
@@ -1099,6 +1314,8 @@
     document.getElementById('recapMessage').textContent =
       '"' + (message || "Happy Father's Day! You're my favorite superhero. 💙") + '"';
     document.getElementById('recapName').textContent = name || 'You';
+    const cakeNicknameEl = document.getElementById('cakeNickname');
+    if (cakeNicknameEl) cakeNicknameEl.textContent = nickname || 'Dad';
   }
 
   document.getElementById('continueButton').addEventListener('click', () => {
@@ -1114,8 +1331,8 @@
   let isDadView = false;
 
   function goToPage(n){
-    if (isDadView && (n === 1 || n === 4)) return; // dad's view never shows the form or payment
-    if (n === 4) updateRecap();
+    if (isDadView && (n === 1 || n === 5)) return; // dad's view never shows the form or payment
+    if (n === 4 || n === 5) updateRecap();
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById('page' + n);
     if (target) target.classList.add('active');
@@ -1142,20 +1359,20 @@
     isDadView = true;
 
     const navPersonalize = document.querySelector('.nav-pill[data-page="1"]');
-    const navPayment = document.querySelector('.nav-pill[data-page="4"]');
+    const navPayment = document.querySelector('.nav-pill[data-page="5"]');
     if (navPersonalize) navPersonalize.style.display = 'none';
     if (navPayment) navPayment.style.display = 'none';
 
     // Hide the footer "Back"/"Next" buttons that would otherwise lead
     // to the personalize form or the payment page.
     const page2Back = document.getElementById('page2BackBtn');
-    const page3Next = document.getElementById('page3NextBtn');
+    const page4Next = document.getElementById('page4NextBtn');
     if (page2Back) page2Back.style.display = 'none';
-    if (page3Next) page3Next.style.display = 'none';
+    if (page4Next) page4Next.style.display = 'none';
 
-    // Page 4 (payment) is never used in dad's view, so remove it
+    // Page 5 (payment) is never used in dad's view, so remove it
     // from the DOM entirely as an extra safeguard.
-    const paymentPage = document.getElementById('page4');
+    const paymentPage = document.getElementById('page5');
     if (paymentPage) paymentPage.remove();
 
     const heroWrap = document.querySelector('.hero .wrap');
