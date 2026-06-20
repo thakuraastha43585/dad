@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Father's Day, Superhero! 🦸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF6E8;
+    --sky-top:#BFE3FF;
+    --sky-bottom:#FFF6E8;
+    --navy:#1C2E4A;
+    --coral:#FF6F61;
+    --gold:#FFC145;
+    --mint:#5FBE8C;
+    --pink:#FF9EBB;
+    --skyblue:#5B9BD5;
+    --white:#FFFFFF;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Quicksand', sans-serif;
+    background:var(--cream);
+    color:var(--navy);
+    background-image:radial-gradient(circle, rgba(28,46,74,0.06) 1.5px, transparent 1.5px);
+    background-size:22px 22px;
+  }
+  h1,h2,h3{font-family:'Baloo 2', cursive; margin:0; line-height:1.15;}
+  p{margin:0;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 1.5rem;}
+  section{padding:4.5rem 0;}
+  .eyebrow{
+    display:inline-block;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:var(--coral);
+    background:var(--white);
+    border:2px dashed var(--coral);
+    border-radius:999px;
+    padding:.35rem 1.1rem;
+    font-size:.85rem;
+    margin-bottom:1.1rem;
+  }
+  .center{text-align:center;}
+  .sub{font-size:1.05rem; opacity:.8; margin-top:.6rem; max-width:540px; margin-left:auto; margin-right:auto;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 78%);
+    padding:3.5rem 0 2rem;
+    text-align:center;
+  }
+  .cloud{
+    position:absolute;
+    background:#fff;
+    border-radius:50%;
+    opacity:.8;
+    filter:blur(0.5px);
+  }
+  .cloud::before, .cloud::after{
+    content:'';
+    position:absolute;
+    background:#fff;
+    border-radius:50%;
+  }
+  .cloud1{width:90px; height:36px; top:10%; left:6%; animation:drift 38s linear infinite;}
+  .cloud1::before{width:50px; height:50px; top:-22px; left:8px;}
+  .cloud1::after{width:40px; height:40px; top:-14px; left:46px;}
+  .cloud2{width:120px; height:42px; top:18%; right:8%; animation:drift 50s linear infinite reverse;}
+  .cloud2::before{width:60px; height:60px; top:-26px; left:14px;}
+  .cloud2::after{width:46px; height:46px; top:-16px; left:60px;}
+  .cloud3{width:70px; height:28px; top:6%; left:42%; animation:drift 30s linear infinite;}
+  .cloud3::before{width:40px; height:40px; top:-18px; left:6px;}
+  .cloud3::after{width:30px; height:30px; top:-10px; left:36px;}
+  @keyframes drift{ from{transform:translateX(-30px);} to{transform:translateX(30px);} }
+
+  .star{
+    position:absolute;
+    font-size:1.1rem;
+    opacity:.7;
+    animation:twinkle 2.6s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.25; transform:scale(.85);} 50%{opacity:.85; transform:scale(1.1);} }
+
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    color:var(--navy);
+  }
+  .hero .tagline{
+    font-size:1.15rem;
+    font-weight:600;
+    margin-top:.9rem;
+    color:var(--navy);
+    opacity:.85;
+  }
+  .hero .hint{
+    margin-top:1.4rem;
+    font-weight:700;
+    color:var(--coral);
+    font-size:.95rem;
+  }
+
+  .balloon-field{
+    position:relative;
+    height:340px;
+    margin-top:1rem;
+  }
+  .balloon{
+    position:absolute;
+    bottom:-40px;
+    width:64px;
+    cursor:pointer;
+    animation:bob 3.4s ease-in-out infinite;
+    transition:transform .25s ease, opacity .35s ease;
+    touch-action:manipulation;
+  }
+  .balloon svg{width:100%; display:block; filter:drop-shadow(2px 4px 3px rgba(28,46,74,.15));}
+  .balloon:hover{transform:scale(1.06) translateY(-4px);}
+  .balloon.popped{
+    transform:scale(1.5);
+    opacity:0;
+    pointer-events:none;
+  }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+  @media (prefers-reduced-motion:reduce){ .balloon{animation:none;} .cloud1,.cloud2,.cloud3,.star{animation:none;} }
+
+  .reveal-banner{
+    margin:1.6rem auto 0;
+    max-width:480px;
+    background:var(--white);
+    border:3px solid var(--navy);
+    border-radius:20px;
+    box-shadow:6px 6px 0 var(--navy);
+    padding:1.1rem 1.4rem;
+    font-family:'Baloo 2', cursive;
+    font-size:1.2rem;
+    color:var(--navy);
+    transform:scale(1);
+  }
+  .reveal-banner.pop-in{ animation:popin .45s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes popin{ 0%{transform:scale(.85); opacity:.4;} 60%{transform:scale(1.05);} 100%{transform:scale(1); opacity:1;} }
+
+  /* ---------- SECTION DIVIDER ---------- */
+  .squiggle{
+    height:18px;
+    background-repeat:repeat-x;
+    background-size:36px 18px;
+    background-image: radial-gradient(circle at 9px 0px, transparent 9px, var(--cream) 10px);
+    margin-top:-1px;
+  }
+
+  /* ---------- CUTE MESSAGES ---------- */
+  .message-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.4rem;
+    margin-top:2.6rem;
+  }
+  .msg-card{
+    background:var(--white);
+    border:3px solid var(--navy);
+    border-radius:18px;
+    box-shadow:5px 5px 0 var(--navy);
+    padding:1.4rem 1.2rem;
+    font-weight:600;
+    font-size:1.02rem;
+    transition:transform .2s ease;
+  }
+  .msg-card:nth-child(odd){transform:rotate(-1deg);}
+  .msg-card:nth-child(even){transform:rotate(1deg);}
+  .msg-card:hover{transform:translateY(-4px) rotate(0deg);}
+
+  /* ---------- FLOWERS ---------- */
+  .flowers-section{background:var(--white);}
+  .flower-field{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:1.6rem;
+    margin-top:2.4rem;
+  }
+  .flower{
+    width:88px;
+    cursor:pointer;
+    text-align:center;
+    touch-action:manipulation;
+  }
+  .flower svg{width:100%; display:block;}
+  .petals{ transform:scale(.12); transform-origin:60px 58px; transition:transform .6s cubic-bezier(.34,1.56,.64,1); }
+  .flower.open .petals{ transform:scale(1); }
+  .flower-label{font-size:.8rem; font-weight:700; color:var(--navy); opacity:.55; margin-top:.3rem;}
+
+  .wish-display{
+    margin:2.4rem auto 0;
+    max-width:520px;
+    background:var(--cream);
+    border:3px dashed var(--coral);
+    border-radius:18px;
+    padding:1.2rem 1.4rem;
+    font-family:'Baloo 2', cursive;
+    font-size:1.15rem;
+    text-align:center;
+    color:var(--navy);
+  }
+  .wish-display.pop-in{ animation:popin .45s cubic-bezier(.34,1.56,.64,1); }
+
+  /* ---------- OFFER ---------- */
+  .offer-section{
+    background:var(--navy);
+    color:var(--white);
+    text-align:center;
+  }
+  .offer-section .eyebrow{ background:var(--navy); color:var(--gold); border-color:var(--gold);}
+  .offer-section .sub{color:#cfd9ea;}
+  .code-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.4rem;
+    margin-top:2.6rem;
+  }
+  .code-badge{
+    position:relative;
+    background:var(--white);
+    color:var(--navy);
+    border-radius:18px;
+    border:3px solid var(--gold);
+    box-shadow:5px 5px 0 var(--gold);
+    padding:1.5rem 1rem 1.3rem;
+    cursor:pointer;
+    overflow:hidden;
+    transition:transform .15s ease;
+  }
+  .code-badge:hover{transform:translateY(-4px);}
+  .code-badge .code{font-family:'Baloo 2', cursive; font-size:1.5rem; font-weight:700; letter-spacing:.03em;}
+  .code-badge .desc{font-size:.85rem; font-weight:600; opacity:.7; margin-top:.4rem;}
+  .code-badge .tap{font-size:.72rem; font-weight:700; color:var(--coral); margin-top:.7rem; text-transform:uppercase; letter-spacing:.05em;}
+  .burst{
+    position:absolute;
+    top:50%; left:50%;
+    width:10px; height:10px;
+    margin:-5px 0 0 -5px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,193,69,.9), transparent 70%);
+    transform:scale(0);
+    pointer-events:none;
+  }
+  .burst.go{ animation:burstgo .6s ease-out forwards; }
+  @keyframes burstgo{ 0%{transform:scale(0); opacity:1;} 100%{transform:scale(14); opacity:0;} }
+
+  /* ---------- PAYMENT ---------- */
+  .pay-card{
+    max-width:480px;
+    margin:2.6rem auto 0;
+    background:var(--white);
+    border:3px solid var(--navy);
+    border-radius:22px;
+    box-shadow:7px 7px 0 var(--navy);
+    padding:2rem 1.8rem;
+    text-align:center;
+  }
+  .amount-grid{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:.7rem;
+    margin-top:1.4rem;
+  }
+  .amount-btn{
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    font-size:.95rem;
+    border:2.5px solid var(--navy);
+    background:var(--white);
+    color:var(--navy);
+    border-radius:999px;
+    padding:.55rem 1.2rem;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .amount-btn.active, .amount-btn:hover{ background:var(--coral); color:#fff; border-color:var(--coral); }
+  .custom-amount{
+    margin-top:.9rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+  }
+  .custom-amount input{
+    width:120px;
+    border:2.5px solid var(--navy);
+    border-radius:999px;
+    padding:.5rem .9rem;
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    font-size:.95rem;
+    text-align:center;
+  }
+  .custom-amount input:focus{outline:3px solid var(--gold);}
+  .pay-btn{
+    margin-top:1.6rem;
+    width:100%;
+    font-family:'Baloo 2', cursive;
+    font-size:1.15rem;
+    font-weight:700;
+    color:#fff;
+    background:var(--coral);
+    border:none;
+    border-radius:999px;
+    padding:.85rem 1rem;
+    cursor:pointer;
+    box-shadow:0 6px 0 #c9534a;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .pay-btn:active{ transform:translateY(4px); box-shadow:0 2px 0 #c9534a; }
+  .pay-note{margin-top:1rem; font-size:.8rem; opacity:.6; font-style:italic;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:2.6rem 0 3rem;
+    font-weight:700;
+    color:var(--navy);
+    opacity:.75;
+  }
+
+  /* ---------- TOAST ---------- */
+  #toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--navy);
+    color:#fff;
+    font-weight:700;
+    font-family:'Quicksand', sans-serif;
+    padding:.8rem 1.4rem;
+    border-radius:999px;
+    box-shadow:0 6px 18px rgba(0,0,0,.2);
+    opacity:0;
+    transition:all .3s ease;
+    z-index:50;
+    pointer-events:none;
+    font-size:.9rem;
+  }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  :focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+
+  @media (max-width:760px){
+    .message-grid{grid-template-columns:1fr 1fr;}
+    .code-grid{grid-template-columns:1fr;}
+    .balloon-field{height:300px;}
+    section{padding:3.2rem 0;}
+  }
+  @media (max-width:480px){
+    .message-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="star" style="top:14%; left:18%;">✨</div>
+    <div class="star" style="top:28%; right:20%; animation-delay:.8s;">⭐</div>
+    <div class="star" style="top:8%; right:32%; animation-delay:1.4s;">✨</div>
+
+    <div class="wrap">
+      <span class="eyebrow">🎈 For the real-life superhero 🎈</span>
+      <h1>Happy Father's Day</h1>
+      <p class="tagline">To the dad who wears the cape every single day.</p>
+      <p class="hint">pop a balloon to find what's inside ↓</p>
+
+      <div class="balloon-field" id="balloonField"></div>
+
+      <div class="reveal-banner" id="balloonMessage">🎈 Tap any balloon!</div>
+    </div>
+  </header>
+  <div class="squiggle"></div>
+
+  <!-- CUTE MESSAGES -->
+  <section class="messages-section">
+    <div class="wrap center">
+      <span class="eyebrow">💌 Little truths</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Just Because, Dad…</h2>
+      <p class="sub">A few things that never get old.</p>
+      <div class="message-grid">
+        <div class="msg-card">🦸 You're the original superhero — no cape required.</div>
+        <div class="msg-card">🚲 You taught me to ride, to fall, and to get back up.</div>
+        <div class="msg-card">📞 Still my first call, good days and bad ones.</div>
+        <div class="msg-card">😂 World's okay-est singer. World's best dad jokes.</div>
+        <div class="msg-card">💪 My definition of "strong" has always been you.</div>
+        <div class="msg-card">🏡 Home feels like home because you're in it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOWERS -->
+  <section class="flowers-section">
+    <div class="wrap center">
+      <span class="eyebrow">🌸 Make a wish</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Pick a Bloom for Dad</h2>
+      <p class="sub">Tap a bud and watch it open.</p>
+      <div class="flower-field" id="flowerField"></div>
+      <div class="wish-display" id="wishMessage">🌷 Tap a flower to reveal a wish!</div>
+    </div>
+  </section>
+
+  <!-- OFFER -->
+  <section class="offer-section">
+    <div class="wrap center">
+      <span class="eyebrow">🎉 Limited time</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Father's Day Sale</h2>
+      <p class="sub">Tap a code to copy it at checkout.</p>
+      <div class="code-grid">
+        <div class="code-badge" data-code="SUPERDAD15">
+          <div class="code">SUPERDAD15</div>
+          <div class="desc">15% off everything</div>
+          <div class="tap">tap to copy</div>
+        </div>
+        <div class="code-badge" data-code="HERO20">
+          <div class="code">HERO20</div>
+          <div class="desc">20% off orders over ₹999</div>
+          <div class="tap">tap to copy</div>
+        </div>
+        <div class="code-badge" data-code="CAPEFREE">
+          <div class="code">CAPEFREE</div>
+          <div class="desc">Free shipping, no minimum</div>
+          <div class="tap">tap to copy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT -->
+  <section class="payment-section">
+    <div class="wrap center">
+      <span class="eyebrow">💙 Send a gift</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Send Dad a Little Love</h2>
+      <p class="sub">Pick an amount and check out securely.</p>
+
+      <div class="pay-card">
+        <div class="amount-grid" id="amountGrid">
+          <button class="amount-btn" data-amount="499">₹499</button>
+          <button class="amount-btn" data-amount="999">₹999</button>
+          <button class="amount-btn" data-amount="1499">₹1499</button>
+        </div>
+        <div class="custom-amount">
+          <span style="font-weight:700;">₹</span>
+          <input type="number" id="customAmount" placeholder="Custom amount" min="1">
+        </div>
+        <button class="pay-btn" id="payButton">Pay with Razorpay 💙</button>
+        <p class="pay-note">Demo checkout — site owner: add your Razorpay Key ID in the script to go live.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Made with 💙 for every superhero dad out there.
+  </footer>
+
+  <div id="toast"></div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+  <script>
+  // ---------- helpers ----------
+  function toast(msg, ms){
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(()=> el.classList.remove('show'), ms || 2400);
+  }
+  function confettiBurst(x, y){
+    if (typeof confetti === 'function'){
+      confetti({ particleCount: 40, spread: 60, startVelocity: 28, origin: { x: x/window.innerWidth, y: y/window.innerHeight }, colors: ['#FF6F61','#FFC145','#5FBE8C','#FF9EBB','#5B9BD5'] });
+    }
+  }
+  function rand(min, max){ return Math.random()*(max-min)+min; }
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  // ---------- BALLOONS ----------
+  const balloonColors = ['#FF6F61','#FFC145','#5FBE8C','#FF9EBB','#5B9BD5'];
+  const balloonMessages = [
+    "You are my superhero, Dad! 🦸",
+    "Best hugs in the whole world. 🤗",
+    "My first hero, my forever friend.",
+    "Thanks for catching me every time I fell. 🛡️",
+    "You make ordinary days feel safe.",
+    "Strongest. Kindest. Funniest. Dad-est. 💪",
+    "Behind every superhero kid is an even cooler dad.",
+    "You're the reason I believe in heroes. ⭐",
+    "I love you more than all the balloons here. 🎈",
+    "Thank you for always showing up for me."
+  ];
+
+  function balloonSVG(color){
+    return `<svg viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="30" cy="34" rx="28" ry="32" fill="${color}"/>
+      <ellipse cx="20" cy="20" rx="6" ry="9" fill="#ffffff" opacity="0.28"/>
+      <polygon points="24,63 36,63 30,73" fill="${color}"/>
+      <line x1="30" y1="73" x2="30" y2="108" stroke="#8a6d4a" stroke-width="2" stroke-dasharray="2 4"/>
+    </svg>`;
+  }
+
+  const balloonField = document.getElementById('balloonField');
+  const balloonMessageEl = document.getElementById('balloonMessage');
+  const usedMessages = new Set();
+
+  function nextMessage(){
+    if (usedMessages.size >= balloonMessages.length) usedMessages.clear();
+    let m;
+    do { m = pick(balloonMessages); } while (usedMessages.has(m) && usedMessages.size < balloonMessages.length);
+    usedMessages.add(m);
+    return m;
+  }
+
+  function spawnBalloon(slot, leftPct){
+    const el = document.createElement('div');
+    el.className = 'balloon';
+    const color = pick(balloonColors);
+    el.innerHTML = balloonSVG(color);
+    el.style.left = leftPct + '%';
+    el.style.animationDelay = rand(0, 2).toFixed(2) + 's';
+    el.dataset.message = nextMessage();
+    el.addEventListener('click', () => popBalloon(el, slot, leftPct));
+    balloonField.appendChild(el);
+    return el;
+  }
+
+  function popBalloon(el, slot, leftPct){
+    if (el.classList.contains('popped')) return;
+    el.classList.add('popped');
+    const rect = el.getBoundingClientRect();
+    confettiBurst(rect.left + rect.width/2, rect.top + rect.height/2);
+    balloonMessageEl.textContent = el.dataset.message;
+    balloonMessageEl.classList.remove('pop-in');
+    void balloonMessageEl.offsetWidth;
+    balloonMessageEl.classList.add('pop-in');
+    setTimeout(() => {
+      el.remove();
+      spawnBalloon(slot, leftPct);
+    }, 900);
+  }
+
+  const balloonSlots = 7;
+  for (let i=0; i<balloonSlots; i++){
+    const leftPct = 6 + (i * (88/(balloonSlots-1)));
+    spawnBalloon(i, leftPct + rand(-2,2));
+  }
+
+  // ---------- FLOWERS ----------
+  const petalColors = ['#FF6F61','#FFC145','#FF9EBB','#5FBE8C','#5B9BD5'];
+  const wishes = [
+    "Wishing you lazy Sunday mornings and extra crispy bacon. 🥓",
+    "May your favourite chair always be free when you need it. 🛋️",
+    "Wishing you a year as legendary as your dad jokes. 😄",
+    "May the remote control always be exactly where you left it. 📺",
+    "Wishing you sunshine on the golf course and gravy on the roast. ☀️",
+    "May your tools always be right where you put them — for once. 🔧",
+    "Wishing you a Father's Day with zero 'is it plugged in?' calls. 💻",
+    "May every year give you even more reasons to be proud. 🌟"
+  ];
+  const usedWishes = new Set();
+  function nextWish(){
+    if (usedWishes.size >= wishes.length) usedWishes.clear();
+    let w;
+    do { w = pick(wishes); } while (usedWishes.has(w) && usedWishes.size < wishes.length);
+    usedWishes.add(w);
+    return w;
+  }
+
+  function flowerSVG(color){
+    let petals = '';
+    for (let a=0; a<360; a+=60){
+      petals += `<ellipse cx="60" cy="40" rx="11" ry="19" fill="${color}" transform="rotate(${a} 60 58)"/>`;
+    }
+    return `<svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="78" x2="60" y2="124" stroke="#5FBE8C" stroke-width="3"/>
+      <ellipse cx="48" cy="100" rx="10" ry="5" fill="#5FBE8C" transform="rotate(-20 48 100)"/>
+      <g class="petals">
+        ${petals}
+        <circle cx="60" cy="58" r="11" fill="#FFC145"/>
+      </g>
+    </svg>`;
+  }
+
+  const flowerField = document.getElementById('flowerField');
+  const wishMessageEl = document.getElementById('wishMessage');
+
+  function spawnFlower(){
+    const el = document.createElement('div');
+    el.className = 'flower';
+    const color = pick(petalColors);
+    el.innerHTML = flowerSVG(color) + '<div class="flower-label">tap me</div>';
+    el.dataset.wish = nextWish();
+    el.addEventListener('click', () => {
+      if (el.classList.contains('open')) return;
+      el.classList.add('open');
+      el.querySelector('.flower-label').textContent = '🌼 bloomed';
+      const rect = el.getBoundingClientRect();
+      confettiBurst(rect.left + rect.width/2, rect.top);
+      wishMessageEl.textContent = el.dataset.wish;
+      wishMessageEl.classList.remove('pop-in');
+      void wishMessageEl.offsetWidth;
+      wishMessageEl.classList.add('pop-in');
+    });
+    flowerField.appendChild(el);
+  }
+  for (let i=0; i<6; i++) spawnFlower();
+
+  // ---------- DISCOUNT CODES ----------
+  document.querySelectorAll('.code-badge').forEach(badge => {
+    badge.addEventListener('click', async () => {
+      const code = badge.dataset.code;
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch(e){
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(e2){}
+        ta.remove();
+      }
+      const burst = document.createElement('div');
+      burst.className = 'burst go';
+      badge.appendChild(burst);
+      setTimeout(()=> burst.remove(), 650);
+      const rect = badge.getBoundingClientRect();
+      confettiBurst(rect.left + rect.width/2, rect.top + rect.height/2);
+      toast('Copied "' + code + '"! 🎉');
+    });
+  });
+
+  // ---------- PAYMENT ----------
+  const RAZORPAY_KEY_ID = "rzp_test_YOUR_KEY_ID_HERE"; // <-- replace with your real Razorpay Key ID to go live
+
+  let selectedAmount = null;
+  const amountBtns = document.querySelectorAll('.amount-btn');
+  const customInput = document.getElementById('customAmount');
+
+  amountBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      amountBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedAmount = parseInt(btn.dataset.amount, 10);
+      customInput.value = '';
+    });
+  });
+  customInput.addEventListener('input', () => {
+    if (customInput.value){
+      amountBtns.forEach(b => b.classList.remove('active'));
+      selectedAmount = parseInt(customInput.value, 10);
+    }
+  });
+
+  document.getElementById('payButton').addEventListener('click', () => {
+    const amount = customInput.value ? parseInt(customInput.value, 10) : selectedAmount;
+    if (!amount || amount <= 0){
+      toast('Pick or enter an amount first 💛');
+      return;
+    }
+    if (RAZORPAY_KEY_ID.includes('YOUR_KEY_ID')){
+      toast('Demo mode — add your Razorpay Key ID in the code to enable real payments.', 3200);
+      return;
+    }
+    if (typeof Razorpay === 'undefined'){
+      toast("Couldn't load Razorpay. Check your connection.");
+      return;
+    }
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: amount * 100,
+      currency: 'INR',
+      name: "Father's Day Gift",
+      description: 'A little something for Dad',
+      theme: { color: '#1C2E4A' },
+      handler: function(response){
+        toast('Payment successful! 🎉');
+      }
+    };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
+</body>
+</html>
