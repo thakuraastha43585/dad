@@ -954,7 +954,7 @@
   });
 
   // ---------- PAYMENT ----------
-  const RAZORPAY_KEY_ID = "rzp_test_YOUR_KEY_ID_HERE"; // <-- replace with your real Razorpay Key ID to go live
+  const RAZORPAY_KEY_ID = "rzp_live_Sz9gct8RO5E1jB"; // <-- replace with your real Razorpay Key ID to go live
   const FIXED_AMOUNT = 99; // flat gift price in INR
   let currentAmount = FIXED_AMOUNT;
 
@@ -964,12 +964,19 @@
     CAPEFREE:     { type: 'shipping' },
     WORLDSBEST10: { type: 'percent',  value: 10 },
     DAD99:        { type: 'flat',     value: 99, minOrder: 599 },
-    FIRSTHERO:    { type: 'percent',  value: 5 }
+    FIRSTHERO:    { type: 'percent',  value: 5 },
+    SAVE50:       { type: 'flat',     value: 50 },
+    DADISFREE:    { type: 'free' }
   };
 
   function updatePriceUI(){
-    document.getElementById('priceAmount').textContent = '₹' + currentAmount;
-    document.getElementById('payButton').textContent = 'Pay ₹' + currentAmount + ' with Razorpay 💙';
+    if (currentAmount <= 0){
+      document.getElementById('priceAmount').textContent = 'FREE';
+      document.getElementById('payButton').textContent = "Get Link — It's Free! 💙";
+    } else {
+      document.getElementById('priceAmount').textContent = '₹' + currentAmount;
+      document.getElementById('payButton').textContent = 'Pay ₹' + currentAmount + ' with Razorpay 💙';
+    }
   }
 
   document.getElementById('couponApplyButton').addEventListener('click', () => {
@@ -1004,6 +1011,9 @@
       feedback.textContent = `${raw} applied — ₹${deal.value} off! 🎉`;
     } else if (deal.type === 'shipping'){
       feedback.textContent = `${raw} applied — free shipping! 🎉`;
+    } else if (deal.type === 'free'){
+      currentAmount = 0;
+      feedback.textContent = `${raw} applied — this one's on the house! 🎉`;
     }
     feedback.className = 'coupon-feedback success';
     updatePriceUI();
@@ -1016,6 +1026,11 @@
 
   document.getElementById('payButton').addEventListener('click', () => {
     const amount = currentAmount;
+    if (amount <= 0){
+      toast('Free gift unlocked! 🎉');
+      onPaymentSuccess();
+      return;
+    }
     if (RAZORPAY_KEY_ID.includes('YOUR_KEY_ID')){
       toast('Demo payment successful! 🎉', 2600);
       onPaymentSuccess();
