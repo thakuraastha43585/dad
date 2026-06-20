@@ -699,7 +699,7 @@
   </section>
 
   <div class="page-footer-nav">
-    <button class="next-btn back-btn" onclick="goToPage(1)">← Back</button>
+    <button class="next-btn back-btn" id="page2BackBtn" onclick="goToPage(1)">← Back</button>
     <button class="next-btn" onclick="goToPage(3)">Next: Wishes →</button>
   </div>
 
@@ -722,7 +722,7 @@
 
   <div class="page-footer-nav">
     <button class="next-btn back-btn" onclick="goToPage(2)">← Back</button>
-    <button class="next-btn" onclick="goToPage(4)">Next: Send a Gift →</button>
+    <button class="next-btn" id="page3NextBtn" onclick="goToPage(4)">Next: Send a Gift →</button>
   </div>
 
   </div>
@@ -1111,7 +1111,10 @@
   });
 
   // ---------- PAGE NAVIGATION ----------
+  let isDadView = false;
+
   function goToPage(n){
+    if (isDadView && (n === 1 || n === 4)) return; // dad's view never shows the form or payment
     if (n === 4) updateRecap();
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById('page' + n);
@@ -1136,10 +1139,24 @@
     const msg = params.get('msg');
     if (!to && !from && !msg) return;
 
+    isDadView = true;
+
     const navPersonalize = document.querySelector('.nav-pill[data-page="1"]');
     const navPayment = document.querySelector('.nav-pill[data-page="4"]');
     if (navPersonalize) navPersonalize.style.display = 'none';
     if (navPayment) navPayment.style.display = 'none';
+
+    // Hide the footer "Back"/"Next" buttons that would otherwise lead
+    // to the personalize form or the payment page.
+    const page2Back = document.getElementById('page2BackBtn');
+    const page3Next = document.getElementById('page3NextBtn');
+    if (page2Back) page2Back.style.display = 'none';
+    if (page3Next) page3Next.style.display = 'none';
+
+    // Page 4 (payment) is never used in dad's view, so remove it
+    // from the DOM entirely as an extra safeguard.
+    const paymentPage = document.getElementById('page4');
+    if (paymentPage) paymentPage.remove();
 
     const heroWrap = document.querySelector('.hero .wrap');
     const hint = heroWrap.querySelector('.hint');
