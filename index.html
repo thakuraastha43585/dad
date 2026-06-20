@@ -1113,7 +1113,15 @@
 
   if (cakeStage){
     cakeStage.addEventListener('click', () => {
-      if (cakeBlown) return;
+      if (cakeBlown){
+        // Already blown out — tap again to relight and reset for another go.
+        cakeBlown = false;
+        cakeFlame.classList.remove('out');
+        cakeBody.classList.remove('melting');
+        finalMessage.classList.remove('show');
+        cakeHint.textContent = '👆 Tap the candle to blow it out';
+        return;
+      }
       cakeBlown = true;
 
       cakeFlame.classList.add('out');
