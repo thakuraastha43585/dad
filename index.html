@@ -212,6 +212,160 @@
   }
   .wish-display.pop-in{ animation:popin .45s cubic-bezier(.34,1.56,.64,1); }
 
+  /* ---------- PERSONALIZE FORM ---------- */
+  .personalize-section{
+    min-height:calc(100vh - 70px);
+    display:flex;
+    align-items:center;
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 78%);
+  }
+  .form-card{
+    max-width:540px;
+    margin:0 auto;
+    background:var(--white);
+    border:3px solid var(--navy);
+    border-radius:22px;
+    box-shadow:7px 7px 0 var(--navy);
+    padding:2.2rem 2rem;
+    text-align:left;
+  }
+  .form-field{ margin-top:1.3rem; }
+  .form-field label{
+    display:block;
+    font-weight:700;
+    font-size:.92rem;
+    color:var(--navy);
+    margin-bottom:.4rem;
+  }
+  .form-field input, .form-field textarea{
+    width:100%;
+    border:2.5px solid var(--navy);
+    border-radius:14px;
+    padding:.7rem .9rem;
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;
+    font-size:.98rem;
+    color:var(--navy);
+    background:var(--cream);
+  }
+  .form-field textarea{ resize:vertical; min-height:90px; }
+  .form-field input:focus, .form-field textarea:focus{ outline:3px solid var(--gold); background:var(--white); }
+  .continue-btn{
+    margin-top:1.8rem;
+    width:100%;
+    font-family:'Baloo 2', cursive;
+    font-size:1.15rem;
+    font-weight:700;
+    color:#fff;
+    background:var(--coral);
+    border:none;
+    border-radius:999px;
+    padding:.85rem 1rem;
+    cursor:pointer;
+    box-shadow:0 6px 0 #c9534a;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .continue-btn:active{ transform:translateY(4px); box-shadow:0 2px 0 #c9534a; }
+  .form-skip{
+    display:block;
+    text-align:center;
+    margin-top:1rem;
+    font-size:.85rem;
+    font-weight:700;
+    color:var(--navy);
+    opacity:.55;
+    cursor:pointer;
+    background:none;
+    border:none;
+    text-decoration:underline;
+  }
+
+  /* ---------- RECAP (payment page) ---------- */
+  .recap-card{
+    max-width:480px;
+    margin:2rem auto 0;
+    background:var(--cream);
+    border:3px dashed var(--coral);
+    border-radius:18px;
+    padding:1.2rem 1.4rem;
+    text-align:center;
+  }
+  .recap-label{ font-weight:700; font-size:.9rem; opacity:.7; color:var(--navy); }
+  .recap-message{
+    font-family:'Baloo 2', cursive;
+    font-size:1.2rem;
+    color:var(--navy);
+    margin-top:.5rem;
+    line-height:1.3;
+  }
+  .recap-from{ font-weight:700; font-size:.9rem; color:var(--coral); margin-top:.6rem; }
+
+  /* ---------- PAGE NAVIGATION ---------- */
+  .page-nav{
+    position:sticky;
+    top:0;
+    z-index:60;
+    background:rgba(255,246,232,.94);
+    backdrop-filter:blur(8px);
+    border-bottom:3px solid var(--navy);
+    padding:.7rem 0;
+  }
+  .nav-inner{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:.6rem;
+  }
+  .nav-pill{
+    font-family:'Baloo 2', cursive;
+    font-weight:700;
+    font-size:.85rem;
+    border:2.5px solid var(--navy);
+    background:var(--white);
+    color:var(--navy);
+    border-radius:999px;
+    padding:.5rem 1.1rem;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .nav-pill.active, .nav-pill:hover{ background:var(--coral); color:#fff; border-color:var(--coral); }
+  @media (max-width:480px){
+    .nav-pill{font-size:.72rem; padding:.45rem .75rem;}
+  }
+
+  .page{display:none;}
+  .page.active{display:block; animation:pagefade .4s ease;}
+  @keyframes pagefade{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+  .page-footer-nav{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:1rem;
+    padding:.5rem 0 3.2rem;
+  }
+  .next-btn{
+    font-family:'Baloo 2', cursive;
+    font-weight:700;
+    font-size:1rem;
+    color:#fff;
+    background:var(--coral);
+    border:none;
+    border-radius:999px;
+    padding:.75rem 1.7rem;
+    cursor:pointer;
+    box-shadow:0 5px 0 #c9534a;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .next-btn:active{ transform:translateY(3px); box-shadow:0 2px 0 #c9534a; }
+  .next-btn.back-btn{
+    background:transparent;
+    color:var(--navy);
+    border:2.5px solid var(--navy);
+    box-shadow:none;
+  }
+  .next-btn.back-btn:active{ transform:translateY(2px); }
+
   /* ---------- OFFER ---------- */
   .offer-section{
     background:var(--navy);
@@ -222,7 +376,7 @@
   .offer-section .sub{color:#cfd9ea;}
   .code-grid{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
     gap:1.4rem;
     margin-top:2.6rem;
   }
@@ -266,44 +420,25 @@
     padding:2rem 1.8rem;
     text-align:center;
   }
-  .amount-grid{
+  .price-display{
     display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:.7rem;
-    margin-top:1.4rem;
-  }
-  .amount-btn{
-    font-family:'Quicksand', sans-serif;
-    font-weight:700;
-    font-size:.95rem;
-    border:2.5px solid var(--navy);
-    background:var(--white);
-    color:var(--navy);
-    border-radius:999px;
-    padding:.55rem 1.2rem;
-    cursor:pointer;
-    transition:all .15s ease;
-  }
-  .amount-btn.active, .amount-btn:hover{ background:var(--coral); color:#fff; border-color:var(--coral); }
-  .custom-amount{
-    margin-top:.9rem;
-    display:flex;
+    flex-direction:column;
     align-items:center;
-    justify-content:center;
-    gap:.4rem;
+    gap:.25rem;
+    margin-top:1rem;
   }
-  .custom-amount input{
-    width:120px;
-    border:2.5px solid var(--navy);
-    border-radius:999px;
-    padding:.5rem .9rem;
-    font-family:'Quicksand', sans-serif;
+  .price-amount{
+    font-family:'Baloo 2', cursive;
+    font-size:3.2rem;
+    font-weight:800;
+    color:var(--coral);
+    line-height:1;
+  }
+  .price-label{
     font-weight:700;
     font-size:.95rem;
-    text-align:center;
+    opacity:.6;
   }
-  .custom-amount input:focus{outline:3px solid var(--gold);}
   .pay-btn{
     margin-top:1.6rem;
     width:100%;
@@ -367,6 +502,49 @@
 </head>
 <body>
 
+  <!-- PAGE NAVIGATION -->
+  <nav class="page-nav" id="pageNav">
+    <div class="wrap nav-inner">
+      <button class="nav-pill active" data-page="1" onclick="goToPage(1)">📝 Personalize</button>
+      <button class="nav-pill" data-page="2" onclick="goToPage(2)">🎈 Hello</button>
+      <button class="nav-pill" data-page="3" onclick="goToPage(3)">🌸 Wishes</button>
+      <button class="nav-pill" data-page="4" onclick="goToPage(4)">💙 Send a Gift</button>
+    </div>
+  </nav>
+
+  <!-- PAGE 1: PERSONALIZE -->
+  <div class="page active" id="page1">
+  <section class="personalize-section">
+    <div class="wrap center">
+      <div class="form-card">
+        <span class="eyebrow">📝 Make it personal</span>
+        <h2 style="font-size:clamp(1.6rem,4vw,2.1rem); margin-top:.7rem;">Before We Begin…</h2>
+        <p class="sub" style="margin-left:0; margin-right:0;">Tell us a bit about you and Dad, and we'll weave it into the surprise.</p>
+
+        <div class="form-field">
+          <label for="yourName">Your name</label>
+          <input type="text" id="yourName" placeholder="e.g. Aanya">
+        </div>
+        <div class="form-field">
+          <label for="dadNickname">What do you call Dad?</label>
+          <input type="text" id="dadNickname" placeholder="e.g. Papa, Dad, Pop, Appa…">
+        </div>
+        <div class="form-field">
+          <label for="customMessage">Your message for him</label>
+          <textarea id="customMessage" placeholder="Write something straight from the heart…"></textarea>
+        </div>
+
+        <button class="continue-btn" id="continueButton">Continue →</button>
+        <button class="form-skip" id="skipButton">Skip for now</button>
+      </div>
+    </div>
+  </section>
+  </div>
+  <!-- END PAGE 1 -->
+
+  <!-- PAGE 2 -->
+  <div class="page" id="page2">
+
   <!-- HERO -->
   <header class="hero">
     <div class="cloud cloud1"></div>
@@ -406,6 +584,17 @@
     </div>
   </section>
 
+  <div class="page-footer-nav">
+    <button class="next-btn back-btn" onclick="goToPage(1)">← Back</button>
+    <button class="next-btn" onclick="goToPage(3)">Next: Wishes →</button>
+  </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+  <!-- PAGE 3 -->
+  <div class="page" id="page3">
+
   <!-- FLOWERS -->
   <section class="flowers-section">
     <div class="wrap center">
@@ -417,50 +606,37 @@
     </div>
   </section>
 
-  <!-- OFFER -->
-  <section class="offer-section">
-    <div class="wrap center">
-      <span class="eyebrow">🎉 Limited time</span>
-      <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Father's Day Sale</h2>
-      <p class="sub">Tap a code to copy it at checkout.</p>
-      <div class="code-grid">
-        <div class="code-badge" data-code="SUPERDAD15">
-          <div class="code">SUPERDAD15</div>
-          <div class="desc">15% off everything</div>
-          <div class="tap">tap to copy</div>
-        </div>
-        <div class="code-badge" data-code="HERO20">
-          <div class="code">HERO20</div>
-          <div class="desc">20% off orders over ₹999</div>
-          <div class="tap">tap to copy</div>
-        </div>
-        <div class="code-badge" data-code="CAPEFREE">
-          <div class="code">CAPEFREE</div>
-          <div class="desc">Free shipping, no minimum</div>
-          <div class="tap">tap to copy</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="page-footer-nav">
+    <button class="next-btn back-btn" onclick="goToPage(2)">← Back</button>
+    <button class="next-btn" onclick="goToPage(4)">Next: Send a Gift →</button>
+  </div>
+
+  </div>
+  <!-- END PAGE 3 -->
+
+  <!-- PAGE 4 -->
+  <div class="page" id="page4">
 
   <!-- PAYMENT -->
   <section class="payment-section">
     <div class="wrap center">
       <span class="eyebrow">💙 Send a gift</span>
       <h2 style="font-size:clamp(1.8rem,4vw,2.4rem);">Send Dad a Little Love</h2>
-      <p class="sub">Pick an amount and check out securely.</p>
+      <p class="sub">One sweet price, no fuss — just check out securely.</p>
+
+      <div class="recap-card" id="recapCard">
+        <p class="recap-label">Your message to <span id="recapNickname">Dad</span>:</p>
+        <p class="recap-message" id="recapMessage">"Happy Father's Day! 💙"</p>
+        <p class="recap-from">— <span id="recapName">You</span></p>
+      </div>
 
       <div class="pay-card">
-        <div class="amount-grid" id="amountGrid">
-          <button class="amount-btn" data-amount="499">₹499</button>
-          <button class="amount-btn" data-amount="999">₹999</button>
-          <button class="amount-btn" data-amount="1499">₹1499</button>
+
+        <div class="price-display">
+          <span class="price-amount">₹99</span>
+          <span class="price-label">Flat gift price</span>
         </div>
-        <div class="custom-amount">
-          <span style="font-weight:700;">₹</span>
-          <input type="number" id="customAmount" placeholder="Custom amount" min="1">
-        </div>
-        <button class="pay-btn" id="payButton">Pay with Razorpay 💙</button>
+        <button class="pay-btn" id="payButton">Pay ₹99 with Razorpay 💙</button>
         <p class="pay-note">Demo checkout — site owner: add your Razorpay Key ID in the script to go live.</p>
       </div>
     </div>
@@ -469,6 +645,9 @@
   <footer>
     Made with 💙 for every superhero dad out there.
   </footer>
+
+  </div>
+  <!-- END PAGE 4 -->
 
   <div id="toast"></div>
 
@@ -554,7 +733,7 @@
     }, 900);
   }
 
-  const balloonSlots = 7;
+  const balloonSlots = 5;
   for (let i=0; i<balloonSlots; i++){
     const leftPct = 6 + (i * (88/(balloonSlots-1)));
     spawnBalloon(i, leftPct + rand(-2,2));
@@ -618,7 +797,7 @@
     });
     flowerField.appendChild(el);
   }
-  for (let i=0; i<6; i++) spawnFlower();
+  for (let i=0; i<5; i++) spawnFlower();
 
   // ---------- DISCOUNT CODES ----------
   document.querySelectorAll('.code-badge').forEach(badge => {
@@ -646,32 +825,10 @@
 
   // ---------- PAYMENT ----------
   const RAZORPAY_KEY_ID = "rzp_test_YOUR_KEY_ID_HERE"; // <-- replace with your real Razorpay Key ID to go live
-
-  let selectedAmount = null;
-  const amountBtns = document.querySelectorAll('.amount-btn');
-  const customInput = document.getElementById('customAmount');
-
-  amountBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      amountBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedAmount = parseInt(btn.dataset.amount, 10);
-      customInput.value = '';
-    });
-  });
-  customInput.addEventListener('input', () => {
-    if (customInput.value){
-      amountBtns.forEach(b => b.classList.remove('active'));
-      selectedAmount = parseInt(customInput.value, 10);
-    }
-  });
+  const FIXED_AMOUNT = 99; // flat gift price in INR
 
   document.getElementById('payButton').addEventListener('click', () => {
-    const amount = customInput.value ? parseInt(customInput.value, 10) : selectedAmount;
-    if (!amount || amount <= 0){
-      toast('Pick or enter an amount first 💛');
-      return;
-    }
+    const amount = FIXED_AMOUNT;
     if (RAZORPAY_KEY_ID.includes('YOUR_KEY_ID')){
       toast('Demo mode — add your Razorpay Key ID in the code to enable real payments.', 3200);
       return;
@@ -694,6 +851,39 @@
     const rzp = new Razorpay(options);
     rzp.open();
   });
+
+  // ---------- PERSONALIZE FORM ----------
+  function updateRecap(){
+    const name = (document.getElementById('yourName').value || '').trim();
+    const nickname = (document.getElementById('dadNickname').value || '').trim();
+    const message = (document.getElementById('customMessage').value || '').trim();
+
+    document.getElementById('recapNickname').textContent = nickname || 'Dad';
+    document.getElementById('recapMessage').textContent =
+      '"' + (message || "Happy Father's Day! You're my favorite superhero. 💙") + '"';
+    document.getElementById('recapName').textContent = name || 'You';
+  }
+
+  document.getElementById('continueButton').addEventListener('click', () => {
+    updateRecap();
+    goToPage(2);
+  });
+  document.getElementById('skipButton').addEventListener('click', () => {
+    updateRecap();
+    goToPage(2);
+  });
+
+  // ---------- PAGE NAVIGATION ----------
+  function goToPage(n){
+    if (n === 4) updateRecap();
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page' + n);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.nav-pill').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.page, 10) === n);
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
