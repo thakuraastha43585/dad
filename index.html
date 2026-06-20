@@ -859,7 +859,7 @@
   </div>
   <!-- END PAGE 3 -->
 
-  <!-- PAGE 4 -->
+  <!-- PAGE 4 (payment) -->
   <div class="page" id="page5">
 
   <!-- PAYMENT -->
@@ -908,9 +908,9 @@
   </div>
 
   </div>
-  <!-- END PAGE 5 (payment) -->
+  <!-- END PAGE 4 (payment) -->
 
-  <!-- PAGE 4 (cake) -->
+  <!-- PAGE 5 (cake) -->
   <div class="page" id="page4">
 
   <!-- BIRTHDAY-STYLE CAKE -->
@@ -947,7 +947,7 @@
   </div>
 
   </div>
-  <!-- END PAGE 4 (cake) -->
+  <!-- END PAGE 5 (cake) -->
 
   <footer>
     Made with 💙 for every superhero dad out there.
@@ -1314,14 +1314,26 @@
 
   // ---------- PERSONALIZE FORM ----------
   function updateRecap(){
-    const name = (document.getElementById('yourName').value || '').trim();
-    const nickname = (document.getElementById('dadNickname').value || '').trim();
-    const message = (document.getElementById('customMessage').value || '').trim();
+    const yourNameEl = document.getElementById('yourName');
+    const dadNicknameEl = document.getElementById('dadNickname');
+    const customMessageEl = document.getElementById('customMessage');
+    const name = (yourNameEl ? yourNameEl.value : '').trim();
+    const nickname = (dadNicknameEl ? dadNicknameEl.value : '').trim();
+    const message = (customMessageEl ? customMessageEl.value : '').trim();
 
-    document.getElementById('recapNickname').textContent = nickname || 'Dad';
-    document.getElementById('recapMessage').textContent =
-      '"' + (message || "Happy Father's Day! You're my favorite superhero. 💙") + '"';
-    document.getElementById('recapName').textContent = name || 'You';
+    // These recap elements live inside the payment page, which is removed
+    // entirely in Dad's view — guard against them being null so that
+    // navigating to other pages (like Cake) never breaks.
+    const recapNicknameEl = document.getElementById('recapNickname');
+    const recapMessageEl = document.getElementById('recapMessage');
+    const recapNameEl = document.getElementById('recapName');
+    if (recapNicknameEl) recapNicknameEl.textContent = nickname || 'Dad';
+    if (recapMessageEl){
+      recapMessageEl.textContent =
+        '"' + (message || "Happy Father's Day! You're my favorite superhero. 💙") + '"';
+    }
+    if (recapNameEl) recapNameEl.textContent = name || 'You';
+
     const cakeNicknameEl = document.getElementById('cakeNickname');
     if (cakeNicknameEl) cakeNicknameEl.textContent = nickname || 'Dad';
   }
